@@ -58,8 +58,8 @@
         <h2>CURRENT SEASON</h2>
         <p>The best anime airing right now</p>
       </div>
-      <!-- Seasonal anime injected by api.js -->
-      <div class="card-grid" id="seasonal-grid-container"></div>
+      <!-- EXACT container ID for api.js fetchSeasonalAnime() -->
+      <div id="seasonal-grid-container" class="card-grid"></div>
     </div>
   </section>
 
@@ -76,28 +76,7 @@
   </footer>
 
   <script src="js/api.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/cursor.js"></script>
-  <script src="js/search.js"></script>
   <script src="js/animations.js"></script>
-
-  <script>
-    // Load seasonal anime
-    document.addEventListener('DOMContentLoaded', async () => {
-      const container = document.getElementById('seasonal-grid-container');
-      if (!container) return;
-      container.innerHTML = '<div class="card-skeleton" style="min-height:280px"><div class="skeleton-shimmer"></div></div>'.repeat(8);
-
-      try {
-        const res = await fetch('https://api.jikan.moe/v4/seasons/now?limit=18');
-        const json = await res.json();
-        if (json.data) {
-          container.innerHTML = json.data.map((a, i) => renderAnimeCard(a, i)).join('');
-        }
-      } catch {
-        container.innerHTML = FALLBACK_ANIME.slice(0, 8).map((a, i) => renderAnimeCard(a, i)).join('');
-      }
-    });
-  </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f2c9993ef53d5ab',t:'MTc3NzI4MDAzOQ=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  <script src="js/main.js"></script>
+</body>
 </html>

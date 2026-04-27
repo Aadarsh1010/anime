@@ -3,29 +3,21 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <meta name="description" content="NEONVERSE — Browse and discover the best anime across all genres." />
   <meta name="theme-color" content="#05050f" />
   <title>NEONVERSE — Anime Universe</title>
   <link rel="stylesheet" href="css/global.css" />
   <link rel="stylesheet" href="css/navbar.css" />
   <link rel="stylesheet" href="css/hero.css" />
-  <link rel="stylesheet" href="css/cards.css" />
   <link rel="stylesheet" href="css/animations.css" />
 </head>
 <body>
 
-  <!-- ═══ LOADING SCREEN ═══ -->
   <div class="loading-screen">
-    <div class="loading-logo">
-      <span>N</span><span>E</span><span>O</span><span>N</span><span>V</span><span>E</span><span>R</span><span>S</span><span>E</span>
-    </div>
+    <div class="loading-logo"><span>N</span><span>E</span><span>O</span><span>N</span><span>V</span><span>E</span><span>R</span><span>S</span><span>E</span></div>
     <div class="loading-spinner"></div>
-    <div class="loading-progress">
-      <div class="loading-progress-bar"></div>
-    </div>
+    <div class="loading-progress"><div class="loading-progress-bar"></div></div>
   </div>
 
-  <!-- ═══ NAVBAR ═══ -->
   <nav class="navbar">
     <div class="container">
       <a href="index.html" class="navbar-logo">NEONVERSE</a>
@@ -40,9 +32,7 @@
         <button class="navbar-search" aria-label="Search">🔍</button>
         <button class="btn-join-hub">JOIN HUB</button>
       </div>
-      <button class="navbar-hamburger" aria-label="Menu">
-        <span></span><span></span><span></span>
-      </button>
+      <button class="navbar-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
     </div>
   </nav>
 
@@ -54,7 +44,6 @@
     <a href="community.html">Community</a>
   </div>
 
-  <!-- ═══ PAGE HERO ═══ -->
   <section class="page-hero">
     <div class="page-hero-bg"></div>
     <div class="page-hero-content">
@@ -63,207 +52,31 @@
     </div>
   </section>
 
-  <!-- ═══ FILTER BAR ═══ -->
-  <div class="filter-bar">
-    <div class="container">
-      <div class="filter-pills" id="genre-filters">
-        <button class="filter-pill active" data-genre="all">All</button>
-        <button class="filter-pill" data-genre="Action">Action</button>
-        <button class="filter-pill" data-genre="Romance">Romance</button>
-        <button class="filter-pill" data-genre="Isekai">Isekai</button>
-        <button class="filter-pill" data-genre="Shonen">Shonen</button>
-        <button class="filter-pill" data-genre="Seinen">Seinen</button>
-        <button class="filter-pill" data-genre="Horror">Horror</button>
-        <button class="filter-pill" data-genre="Comedy">Comedy</button>
-        <button class="filter-pill" data-genre="Fantasy">Fantasy</button>
-        <button class="filter-pill" data-genre="Mecha">Mecha</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ═══ ANIME GRID ═══ -->
   <section class="section">
     <div class="container">
-      <div class="anime-grid" id="anime-grid">
-        <!-- Skeleton loaders -->
-        <div class="skeleton skeleton-card" style="height:320px"></div>
-        <div class="skeleton skeleton-card" style="height:320px"></div>
-        <div class="skeleton skeleton-card" style="height:320px"></div>
-        <div class="skeleton skeleton-card" style="height:320px"></div>
-        <div class="skeleton skeleton-card" style="height:320px"></div>
-        <div class="skeleton skeleton-card" style="height:320px"></div>
-        <div class="skeleton skeleton-card" style="height:320px"></div>
-        <div class="skeleton skeleton-card" style="height:320px"></div>
-        <div class="skeleton skeleton-card" style="height:320px"></div>
-        <div class="skeleton skeleton-card" style="height:320px"></div>
-        <div class="skeleton skeleton-card" style="height:320px"></div>
-        <div class="skeleton skeleton-card" style="height:320px"></div>
+      <div class="section-header reveal-left">
+        <h2>ALL ANIME</h2>
+        <p>Browse the top-rated anime of all time</p>
       </div>
-      <div class="load-more-wrap">
-        <button class="btn btn-ghost" id="load-more-anime">LOAD MORE</button>
-      </div>
+      <!-- EXACT container ID for api.js -->
+      <div id="anime-grid-container" class="anime-grid card-grid"></div>
     </div>
   </section>
 
-  <!-- ═══ FOOTER ═══ -->
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
-        <div class="footer-brand">
-          <div class="logo">NEONVERSE</div>
-          <p>Your ultimate destination for anime and gaming. Join the community and explore infinite worlds.</p>
-        </div>
-        <div class="footer-links">
-          <h4>Quick Links</h4>
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="anime.html">Anime</a></li>
-            <li><a href="games.html">Games</a></li>
-            <li><a href="seasonal.html">Seasonal</a></li>
-            <li><a href="community.html">Community</a></li>
-          </ul>
-        </div>
-        <div class="footer-social">
-          <h4>Connect</h4>
-          <div class="social-icons">
-            <a href="#" class="social-icon discord" title="Discord">💬</a>
-            <a href="#" class="social-icon twitter" title="Twitter">🐦</a>
-            <a href="#" class="social-icon youtube" title="YouTube">▶️</a>
-            <a href="#" class="social-icon reddit" title="Reddit">🤖</a>
-          </div>
-        </div>
-        <div class="footer-newsletter">
-          <h4>Stay Updated</h4>
-          <form class="newsletter-form" onsubmit="event.preventDefault()">
-            <input type="email" placeholder="your@email.com" />
-            <button type="submit">→</button>
-          </form>
-        </div>
+        <div class="footer-brand"><div class="logo">NEONVERSE</div><p>Your ultimate destination for anime and gaming.</p></div>
+        <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="anime.html">Anime</a></li><li><a href="games.html">Games</a></li><li><a href="seasonal.html">Seasonal</a></li><li><a href="community.html">Community</a></li></ul></div>
+        <div class="footer-social"><h4>Connect</h4><div class="social-icons"><a href="#" class="social-icon discord">💬</a><a href="#" class="social-icon twitter">🐦</a><a href="#" class="social-icon youtube">▶️</a><a href="#" class="social-icon reddit">🤖</a></div></div>
+        <div class="footer-newsletter"><h4>Stay Updated</h4><form class="newsletter-form" onsubmit="event.preventDefault()"><input type="email" placeholder="your@email.com" /><button type="submit">→</button></form></div>
       </div>
-      <div class="footer-bottom">
-        <p>© 2025 NEONVERSE. Built with 💜 for the community.</p>
-      </div>
+      <div class="footer-bottom"><p>© 2025 NEONVERSE. Built with 💜 for the community.</p></div>
     </div>
   </footer>
 
   <script src="js/api.js"></script>
-  <script src="js/main.js"></script>
-  <script src="js/cursor.js"></script>
-  <script src="js/search.js"></script>
   <script src="js/animations.js"></script>
-
-  <script>
-    document.addEventListener('DOMContentLoaded', () => {
-      const grid = document.getElementById('anime-grid');
-      const loadMoreBtn = document.getElementById('load-more-anime');
-      const filterBtns = document.querySelectorAll('.filter-pill');
-      let currentPage = 1;
-      let allAnime = [];
-      let activeGenre = 'all';
-
-      /* ── Render Anime Cards ── */
-      function renderAnime(animeList, append = false) {
-        const html = animeList.map((anime, i) => {
-          const img = anime.images?.jpg?.image_url || 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=400';
-          const genres = (anime.genres || []).slice(0, 2).map(g =>
-            `<span>${g.name}</span>`
-          ).join('');
-          const genreNames = (anime.genres || []).map(g => g.name);
-
-          return `
-            <div class="card card-anime reveal-stagger" data-stagger="${i % 12}" data-genres='${JSON.stringify(genreNames)}'>
-              <div class="card-image">
-                <img src="${img}" alt="${anime.title}" loading="lazy" />
-                ${anime.rank ? `<div class="badge-rank">#${anime.rank}</div>` : ''}
-                ${anime.score ? `<div class="badge-score">⭐ ${anime.score}</div>` : ''}
-                <div class="overlay">
-                  <span class="btn btn-primary" style="pointer-events:none;">View Details</span>
-                </div>
-              </div>
-              <div class="card-body">
-                <div class="card-title">${anime.title}</div>
-                <div class="card-genres">${genres}</div>
-              </div>
-            </div>
-          `;
-        }).join('');
-
-        if (append) {
-          grid.insertAdjacentHTML('beforeend', html);
-        } else {
-          grid.innerHTML = html;
-        }
-
-        // Click handlers
-        grid.querySelectorAll('.card-anime').forEach(card => {
-          card.addEventListener('click', () => {
-            const idx = [...grid.querySelectorAll('.card-anime')].indexOf(card);
-            if (allAnime[idx]) Modal.showAnime(allAnime[idx]);
-          });
-        });
-
-        Animations.initScrollReveal();
-        applyFilter();
-      }
-
-      /* ── Load Anime Data ── */
-      async function loadAnime(page = 1) {
-        loadMoreBtn.textContent = 'LOADING...';
-        loadMoreBtn.disabled = true;
-
-        try {
-          const data = await API.getAnimePage(page, 24);
-          if (data && data.data) {
-            allAnime = page === 1 ? data.data : [...allAnime, ...data.data];
-            renderAnime(page === 1 ? data.data : data.data, page > 1);
-          }
-        } catch (err) {
-          grid.innerHTML = createErrorCard('Failed to load anime', 'location.reload()');
-        }
-
-        loadMoreBtn.textContent = 'LOAD MORE';
-        loadMoreBtn.disabled = false;
-      }
-
-      /* ── Genre Filter ── */
-      function applyFilter() {
-        const cards = grid.querySelectorAll('.card-anime');
-        cards.forEach(card => {
-          if (activeGenre === 'all') {
-            card.style.display = '';
-            return;
-          }
-          try {
-            const genres = JSON.parse(card.dataset.genres || '[]');
-            const match = genres.some(g =>
-              g.toLowerCase().includes(activeGenre.toLowerCase())
-            );
-            card.style.display = match ? '' : 'none';
-          } catch {
-            card.style.display = '';
-          }
-        });
-      }
-
-      filterBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          filterBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          activeGenre = btn.dataset.genre;
-          applyFilter();
-        });
-      });
-
-      /* ── Load More ── */
-      loadMoreBtn.addEventListener('click', () => {
-        currentPage++;
-        loadAnime(currentPage);
-      });
-
-      // Initial load
-      loadAnime(1);
-    });
-  </script>
-
+  <script src="js/main.js"></script>
 </body>
 </html>
