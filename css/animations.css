@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#05050f" />
+  <title>NEONVERSE — Anime Universe</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+
+  <div class="loading-screen">
+    <div class="loading-logo"><span>N</span><span>E</span><span>O</span><span>N</span><span>V</span><span>E</span><span>R</span><span>S</span><span>E</span></div>
+    <div class="loading-spinner"></div>
+    <div class="loading-progress"><div class="loading-progress-bar"></div></div>
+  </div>
+
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-logo">NEONVERSE</a>
+      <ul class="navbar-links">
+        <li><a href="index.html">Home</a></li>
+        <li><a href="anime.html" class="active">Anime</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="seasonal.html">Seasonal</a></li>
+        <li><a href="community.html">Community</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <button class="navbar-search" aria-label="Search">🔍</button>
+        <button class="btn-join-hub">JOIN HUB</button>
+      </div>
+      <button class="navbar-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="mobile-nav-overlay">
+    <a href="index.html">Home</a>
+    <a href="anime.html">Anime</a>
+    <a href="games.html">Games</a>
+    <a href="seasonal.html">Seasonal</a>
+    <a href="community.html">Community</a>
+  </div>
+
+  <section class="page-hero">
+    <div class="page-hero-bg"></div>
+    <div class="page-hero-content">
+      <h1 class="reveal-scale">ANIME UNIVERSE</h1>
+      <p>Discover thousands of anime across every genre</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal-left">
+        <h2>ALL ANIME</h2>
+        <p>Browse the top-rated anime of all time</p>
+      </div>
+      <!-- Cards injected by api.js -->
+      <div class="card-grid" id="anime-grid-container"></div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand"><div class="logo">NEONVERSE</div><p>Your ultimate destination for anime and gaming.</p></div>
+        <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="anime.html">Anime</a></li><li><a href="games.html">Games</a></li><li><a href="seasonal.html">Seasonal</a></li><li><a href="community.html">Community</a></li></ul></div>
+        <div class="footer-social"><h4>Connect</h4><div class="social-icons"><a href="#" class="social-icon discord">💬</a><a href="#" class="social-icon twitter">🐦</a><a href="#" class="social-icon youtube">▶️</a><a href="#" class="social-icon reddit">🤖</a></div></div>
+        <div class="footer-newsletter"><h4>Stay Updated</h4><form class="newsletter-form" onsubmit="event.preventDefault()"><input type="email" placeholder="your@email.com" /><button type="submit">→</button></form></div>
+      </div>
+      <div class="footer-bottom"><p>© 2025 NEONVERSE. Built with 💜 for the community.</p></div>
+    </div>
+  </footer>
+
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/animations.js"></script>
+</body>
+</html>

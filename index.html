@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="NEONVERSE — Your Universe. Infinite Worlds of Anime & Gaming. Zero Limits." />
+  <meta name="theme-color" content="#05050f" />
+  <title>NEONVERSE — Anime & Gaming Universe</title>
+  <link rel="stylesheet" href="css/global.css" />
+  <link rel="stylesheet" href="css/navbar.css" />
+  <link rel="stylesheet" href="css/hero.css" />
+  <link rel="stylesheet" href="css/animations.css" />
+</head>
+<body>
+
+  <!-- LOADING SCREEN -->
+  <div class="loading-screen">
+    <div class="loading-logo">
+      <span>N</span><span>E</span><span>O</span><span>N</span><span>V</span><span>E</span><span>R</span><span>S</span><span>E</span>
+    </div>
+    <div class="loading-spinner"></div>
+    <div class="loading-progress"><div class="loading-progress-bar"></div></div>
+  </div>
+
+  <!-- NAVBAR -->
+  <nav class="navbar">
+    <div class="container">
+      <a href="index.html" class="navbar-logo">NEONVERSE</a>
+      <ul class="navbar-links">
+        <li><a href="index.html" class="active">Home</a></li>
+        <li><a href="anime.html">Anime</a></li>
+        <li><a href="games.html">Games</a></li>
+        <li><a href="seasonal.html">Seasonal</a></li>
+        <li><a href="community.html">Community</a></li>
+      </ul>
+      <div class="navbar-actions">
+        <button class="navbar-search" aria-label="Search">🔍</button>
+        <button class="btn-join-hub">JOIN HUB</button>
+      </div>
+      <button class="navbar-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+    </div>
+  </nav>
+
+  <div class="mobile-nav-overlay">
+    <a href="index.html">Home</a>
+    <a href="anime.html">Anime</a>
+    <a href="games.html">Games</a>
+    <a href="seasonal.html">Seasonal</a>
+    <a href="community.html">Community</a>
+  </div>
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="hero-bg"><div class="hero-bg-pink"></div></div>
+    <canvas class="hero-particles" id="hero-particles"></canvas>
+    <div class="hero-content">
+      <h1 class="glitch-title" data-text="NEONVERSE">NEONVERSE</h1>
+      <p class="hero-subtitle" data-typewriter="Your Universe. Infinite Worlds. Zero Limits."></p>
+      <div class="hero-cta">
+        <a href="anime.html" class="btn btn-primary">Explore Anime</a>
+        <a href="games.html" class="btn btn-outline">Enter Gaming</a>
+      </div>
+    </div>
+    <div class="scroll-chevron"><span>Scroll</span><div class="chevron"></div></div>
+  </section>
+
+  <!-- MARQUEE -->
+  <div class="marquee-bar">
+    <div class="marquee-track">
+      <div class="marquee-item">🔥 12,400 ANIME</div>
+      <div class="marquee-item">⚔️ 8,200 GAMES</div>
+      <div class="marquee-item">👥 94,000 MEMBERS</div>
+      <div class="marquee-item">⭐ 2.1M RATINGS</div>
+      <div class="marquee-item">🎮 UPDATED DAILY</div>
+      <div class="marquee-item">🔥 12,400 ANIME</div>
+      <div class="marquee-item">⚔️ 8,200 GAMES</div>
+      <div class="marquee-item">👥 94,000 MEMBERS</div>
+      <div class="marquee-item">⭐ 2.1M RATINGS</div>
+      <div class="marquee-item">🎮 UPDATED DAILY</div>
+    </div>
+  </div>
+
+  <!-- TRENDING ANIME — Cards injected by api.js -->
+  <section class="section">
+    <div class="container">
+      <div class="section-header reveal-left">
+        <h2><span class="glitch-title" data-text="TRENDING" style="font-size:inherit;">TRENDING</span> NOW</h2>
+        <p>The hottest anime right now — updated in real time</p>
+      </div>
+      <div class="card-grid-scroll" id="trending-anime-container"></div>
+      <div style="text-align:center;margin-top:2rem;">
+        <a href="anime.html" class="btn btn-ghost reveal">VIEW ALL ANIME →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOP GAMES — Cards injected by api.js -->
+  <section class="section" style="background:var(--bg-secondary);">
+    <div class="container">
+      <div class="section-header reveal-right">
+        <h2>TOP GAMES</h2>
+        <p>Highest rated games across all platforms</p>
+      </div>
+      <div class="card-grid-scroll" id="top-games-container"></div>
+      <div style="text-align:center;margin-top:2rem;">
+        <a href="games.html" class="btn btn-ghost reveal">VIEW ALL GAMES →</a>
+      </div>
+    </div>
+  </section>
+
+  <!-- STATS — Counter IDs for animations.js -->
+  <section class="section" id="stats-section">
+    <div class="container">
+      <div class="section-header reveal-bottom">
+        <h2>THE UNIVERSE IN NUMBERS</h2>
+      </div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:2rem;text-align:center;">
+        <div class="reveal-bottom" data-stagger="0">
+          <div class="stat-icon">👥</div>
+          <div class="stat-number" id="count-members">0</div>
+          <div class="stat-label">Members</div>
+        </div>
+        <div class="reveal-bottom" data-stagger="1">
+          <div class="stat-icon">📺</div>
+          <div class="stat-number" id="count-anime">0</div>
+          <div class="stat-label">Anime</div>
+        </div>
+        <div class="reveal-bottom" data-stagger="2">
+          <div class="stat-icon">🎮</div>
+          <div class="stat-number" id="count-games">0</div>
+          <div class="stat-label">Games</div>
+        </div>
+        <div class="reveal-bottom" data-stagger="3">
+          <div class="stat-icon">⭐</div>
+          <div class="stat-number" id="count-ratings">0</div>
+          <div class="stat-label">Ratings</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer class="footer">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">NEONVERSE</div>
+          <p>Your ultimate destination for anime and gaming. Join the community and explore infinite worlds.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="anime.html">Anime</a></li>
+            <li><a href="games.html">Games</a></li>
+            <li><a href="seasonal.html">Seasonal</a></li>
+            <li><a href="community.html">Community</a></li>
+          </ul>
+        </div>
+        <div class="footer-social">
+          <h4>Connect</h4>
+          <div class="social-icons">
+            <a href="#" class="social-icon discord">💬</a>
+            <a href="#" class="social-icon twitter">🐦</a>
+            <a href="#" class="social-icon youtube">▶️</a>
+            <a href="#" class="social-icon reddit">🤖</a>
+          </div>
+        </div>
+        <div class="footer-newsletter">
+          <h4>Stay Updated</h4>
+          <form class="newsletter-form" onsubmit="event.preventDefault()">
+            <input type="email" placeholder="your@email.com" />
+            <button type="submit">→</button>
+          </form>
+        </div>
+      </div>
+      <div class="footer-bottom">
+        <p>© 2025 NEONVERSE. Built with 💜 for the community.</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Scripts — api.js auto-renders cards into containers -->
+  <script src="js/api.js"></script>
+  <script src="js/main.js"></script>
+  <script src="js/cursor.js"></script>
+  <script src="js/search.js"></script>
+  <script src="js/animations.js"></script>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f2c975439f5d5ab',t:'MTc3NzI3OTk0Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
