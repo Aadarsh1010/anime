@@ -58,8 +58,7 @@
         <h2>ALL ANIME</h2>
         <p>Browse the top-rated anime of all time</p>
       </div>
-      <!-- EXACT container ID for api.js -->
-      <div id="anime-grid-container" class="anime-grid card-grid"></div>
+      <div id="anime-grid-container" class="card-grid"></div>
     </div>
   </section>
 
@@ -78,5 +77,20 @@
   <script src="js/api.js"></script>
   <script src="js/animations.js"></script>
   <script src="js/main.js"></script>
-</body>
+
+  <!-- SELF-CONTAINED: Directly renders anime cards on page load -->
+  <script>
+  window.onload = function() {
+    console.log('[anime.html] window.onload fired — rendering anime cards...');
+    if (typeof fetchAndRenderAnime === 'function') {
+      fetchAndRenderAnime('anime-grid-container', 24);
+    } else {
+      console.error('fetchAndRenderAnime not found');
+      // Emergency inline fallback
+      var c = document.getElementById('anime-grid-container');
+      if (c) c.innerHTML = '<p style="color:var(--neon-pink);text-align:center;padding:2rem">Failed to load anime. Please refresh.</p>';
+    }
+  };
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f4d46416d3dd5ab',t:'MTc3NzYyMjY1Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

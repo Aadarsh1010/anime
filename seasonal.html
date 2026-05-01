@@ -58,7 +58,6 @@
         <h2>CURRENT SEASON</h2>
         <p>The best anime airing right now</p>
       </div>
-      <!-- EXACT container ID for api.js fetchSeasonalAnime() -->
       <div id="seasonal-grid-container" class="card-grid"></div>
     </div>
   </section>
@@ -78,5 +77,19 @@
   <script src="js/api.js"></script>
   <script src="js/animations.js"></script>
   <script src="js/main.js"></script>
-</body>
+
+  <!-- SELF-CONTAINED: Directly renders seasonal anime on page load -->
+  <script>
+  window.onload = function() {
+    console.log('[seasonal.html] window.onload fired — rendering seasonal anime...');
+    if (typeof fetchSeasonalAnime === 'function') {
+      fetchSeasonalAnime();
+    } else {
+      console.error('fetchSeasonalAnime not found');
+      var c = document.getElementById('seasonal-grid-container');
+      if (c) c.innerHTML = '<p style="color:var(--neon-pink);text-align:center;padding:2rem">Failed to load seasonal anime. Please refresh.</p>';
+    }
+  };
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f4d46fd0acdd5ab',t:'MTc3NzYyMjY4Ng=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

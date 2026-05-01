@@ -45,7 +45,6 @@
     <a href="community.html">Community</a>
   </div>
 
-  <!-- HERO -->
   <section class="hero">
     <div class="hero-bg"><div class="hero-bg-pink"></div></div>
     <canvas class="hero-particles" id="hero-particles"></canvas>
@@ -60,7 +59,6 @@
     <div class="scroll-chevron"><span>Scroll</span><div class="chevron"></div></div>
   </section>
 
-  <!-- MARQUEE -->
   <div class="marquee-bar">
     <div class="marquee-track">
       <div class="marquee-item">🔥 12,400 ANIME</div>
@@ -76,35 +74,32 @@
     </div>
   </div>
 
-  <!-- TRENDING ANIME — cards injected by api.js -->
   <section class="section">
     <div class="container">
       <div class="section-header reveal-left">
         <h2><span class="glitch-title" data-text="TRENDING" style="font-size:inherit">TRENDING</span> NOW</h2>
         <p>The hottest anime right now</p>
       </div>
-      <div id="trending-anime-container" class="cards-scroll-row card-grid-scroll"></div>
+      <div id="trending-anime-container" class="card-grid-scroll"></div>
       <div style="text-align:center;margin-top:2rem">
         <a href="anime.html" class="btn btn-ghost reveal">VIEW ALL ANIME →</a>
       </div>
     </div>
   </section>
 
-  <!-- TOP GAMES — cards injected by api.js -->
   <section class="section" style="background:var(--bg-secondary)">
     <div class="container">
       <div class="section-header reveal-right">
         <h2>TOP GAMES</h2>
         <p>Highest rated games across all platforms</p>
       </div>
-      <div id="top-games-container" class="cards-scroll-row card-grid-scroll"></div>
+      <div id="top-games-container" class="card-grid-scroll"></div>
       <div style="text-align:center;margin-top:2rem">
         <a href="games.html" class="btn btn-ghost reveal">VIEW ALL GAMES →</a>
       </div>
     </div>
   </section>
 
-  <!-- STATS -->
   <section class="section" id="stats-section">
     <div class="container">
       <div class="section-header reveal-bottom"><h2>THE UNIVERSE IN NUMBERS</h2></div>
@@ -148,5 +143,25 @@
   <script src="js/api.js"></script>
   <script src="js/animations.js"></script>
   <script src="js/main.js"></script>
-</body>
+
+  <!-- SELF-CONTAINED: Directly renders cards on page load -->
+  <script>
+  window.onload = function() {
+    console.log('[index.html] window.onload fired — rendering cards...');
+    if (typeof fetchAndRenderAnime === 'function') {
+      fetchAndRenderAnime('trending-anime-container', 6);
+    } else {
+      console.error('fetchAndRenderAnime not found');
+    }
+    if (typeof fetchAndRenderGames === 'function') {
+      fetchAndRenderGames('top-games-container', 6);
+    } else {
+      console.error('fetchAndRenderGames not found');
+    }
+    if (typeof initCountUp === 'function') {
+      initCountUp();
+    }
+  };
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f4d456e6f25d5ab',t:'MTc3NzYyMjYyMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

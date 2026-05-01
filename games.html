@@ -58,8 +58,7 @@
         <h2>ALL GAMES</h2>
         <p>The best games across all platforms and genres</p>
       </div>
-      <!-- EXACT container ID for api.js -->
-      <div id="games-grid-container" class="games-grid card-grid"></div>
+      <div id="games-grid-container" class="card-grid"></div>
     </div>
   </section>
 
@@ -78,5 +77,19 @@
   <script src="js/api.js"></script>
   <script src="js/animations.js"></script>
   <script src="js/main.js"></script>
-</body>
+
+  <!-- SELF-CONTAINED: Directly renders game cards on page load -->
+  <script>
+  window.onload = function() {
+    console.log('[games.html] window.onload fired — rendering game cards...');
+    if (typeof fetchAndRenderGames === 'function') {
+      fetchAndRenderGames('games-grid-container', 20);
+    } else {
+      console.error('fetchAndRenderGames not found');
+      var c = document.getElementById('games-grid-container');
+      if (c) c.innerHTML = '<p style="color:var(--neon-pink);text-align:center;padding:2rem">Failed to load games. Please refresh.</p>';
+    }
+  };
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f4d469109a7d5ab',t:'MTc3NzYyMjY2OA=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>

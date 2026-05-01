@@ -52,7 +52,6 @@
     </div>
   </section>
 
-  <!-- STATS with exact IDs -->
   <section class="section" style="padding:3rem 0" id="stats-section">
     <div class="container">
       <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem;text-align:center">
@@ -64,7 +63,6 @@
     </div>
   </section>
 
-  <!-- QUOTES -->
   <section class="section" style="background:var(--bg-secondary)">
     <div class="container">
       <div class="section-header reveal-left"><h2>WORDS OF WISDOM</h2><p>Famous quotes from anime legends</p></div>
@@ -81,7 +79,6 @@
     </div>
   </section>
 
-  <!-- HOT THIS WEEK -->
   <section class="section">
     <div class="container">
       <div class="section-header reveal-right"><h2>HOT THIS WEEK</h2><p>What the community is buzzing about</p></div>
@@ -108,7 +105,6 @@
     </div>
   </section>
 
-  <!-- DISCUSSIONS -->
   <section class="section" style="background:var(--bg-secondary)">
     <div class="container">
       <div class="section-header reveal-left"><h2>COMMUNITY DISCUSSIONS</h2></div>
@@ -136,5 +132,42 @@
   <script src="js/api.js"></script>
   <script src="js/animations.js"></script>
   <script src="js/main.js"></script>
-</body>
+
+  <!-- SELF-CONTAINED: Directly renders data on page load -->
+  <script>
+  window.onload = function() {
+    console.log('[community.html] window.onload fired — rendering...');
+    if (typeof loadHotAnimeList === 'function') {
+      loadHotAnimeList();
+    }
+    if (typeof loadHotGamesList === 'function') {
+      loadHotGamesList();
+    }
+    if (typeof initCountUp === 'function') {
+      initCountUp();
+    }
+    // Quote carousel
+    var slides = document.querySelectorAll('.quote-slide');
+    var dotsContainer = document.getElementById('quote-dots');
+    if (slides.length && dotsContainer) {
+      var currentSlide = 0;
+      slides.forEach(function(_, i) {
+        var dot = document.createElement('div');
+        dot.className = 'quote-dot' + (i === 0 ? ' active' : '');
+        dot.addEventListener('click', (function(idx) { return function() { goToSlide(idx); }; })(i));
+        dotsContainer.appendChild(dot);
+      });
+      var dots = dotsContainer.querySelectorAll('.quote-dot');
+      function goToSlide(index) {
+        slides[currentSlide].classList.remove('active');
+        dots[currentSlide].classList.remove('active');
+        currentSlide = index;
+        slides[currentSlide].classList.add('active');
+        dots[currentSlide].classList.add('active');
+      }
+      setInterval(function() { goToSlide((currentSlide + 1) % slides.length); }, 4000);
+    }
+  };
+  </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f4d477a48c8d5ab',t:'MTc3NzYyMjcwNg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
