@@ -9,11 +9,268 @@
   <link rel="stylesheet" href="css/navbar.css" />
   <link rel="stylesheet" href="css/hero.css" />
   <link rel="stylesheet" href="css/animations.css" />
+  <style>
+    .page-hero {
+      position: relative;
+      height: 280px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      overflow: hidden;
+      background: linear-gradient(135deg, #05050f 0%, #1a0033 50%, #05050f 100%);
+    }
+    .page-hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse at center, rgba(176,38,255,0.3) 0%, transparent 70%);
+    }
+    .page-hero h1 {
+      font-family: 'Orbitron', sans-serif;
+      font-size: clamp(32px, 6vw, 72px);
+      color: #fff;
+      text-shadow: 0 0 30px rgba(176,38,255,0.8), 0 0 60px rgba(176,38,255,0.4);
+      position: relative;
+      z-index: 1;
+      margin: 0 0 12px;
+    }
+    .page-hero p {
+      color: rgba(255,255,255,0.6);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 16px;
+      position: relative;
+      z-index: 1;
+      margin: 0;
+    }
+    .page-hero-content { z-index: 1; }
+    .stat-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 2rem;
+      text-align: center;
+    }
+    .stat-number {
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 900;
+      font-size: clamp(28px, 5vw, 48px);
+      background: linear-gradient(135deg, #b026ff, #00d4ff);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+    .stat-label {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      color: #555577;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .stat-icon { font-size: 32px; margin-bottom: 8px; }
+    .hot-card {
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(176,38,255,0.2);
+      border-radius: 16px;
+      padding: 24px;
+    }
+    .hot-card h3 {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 16px;
+      color: #b026ff;
+      margin: 0 0 16px;
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .hot-list {
+      list-style: none;
+      counter-reset: hot;
+      padding: 0;
+      margin: 0;
+    }
+    .hot-list li {
+      counter-increment: hot;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .hot-list li:last-child { border-bottom: none; }
+    .hot-list li::before {
+      content: counter(hot);
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: #00d4ff;
+      min-width: 24px;
+    }
+    .hot-name {
+      flex: 1;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      color: #e8e8f0;
+    }
+    .hot-score {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 12px;
+      color: #00ff9d;
+    }
+    .quote-carousel {
+      position: relative;
+      text-align: center;
+      min-height: 200px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+    }
+    .quote-mark {
+      font-size: 120px;
+      color: #b026ff;
+      opacity: 0.1;
+      position: absolute;
+      top: -20px;
+      left: 50%;
+      transform: translateX(-50%);
+      font-family: Georgia, serif;
+      line-height: 1;
+    }
+    .quote-slide {
+      opacity: 0;
+      position: absolute;
+      transition: opacity 0.6s ease;
+      width: 100%;
+      padding: 20px;
+    }
+    .quote-slide.active {
+      opacity: 1;
+      position: relative;
+    }
+    .quote-text {
+      font-family: 'Rajdhani', sans-serif;
+      font-size: clamp(16px, 2.5vw, 22px);
+      font-weight: 600;
+      color: #e8e8f0;
+      font-style: italic;
+      line-height: 1.5;
+      max-width: 700px;
+      margin: 0 auto 12px;
+    }
+    .quote-author {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 12px;
+      color: #00d4ff;
+      letter-spacing: 2px;
+    }
+    .quote-dots {
+      display: flex;
+      gap: 8px;
+      justify-content: center;
+      margin-top: 20px;
+    }
+    .quote-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: rgba(176,38,255,0.3);
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .quote-dot.active {
+      background: #b026ff;
+      box-shadow: 0 0 10px #b026ff;
+      transform: scale(1.3);
+    }
+    .discussion-card {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+      padding: 16px;
+      background: rgba(255,255,255,0.04);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(176,38,255,0.2);
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s;
+    }
+    .discussion-card:hover {
+      border-color: #b026ff;
+      box-shadow: 0 0 20px rgba(176,38,255,0.2);
+      transform: translateX(5px);
+    }
+    .discussion-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, #b026ff, #00d4ff);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: 'Orbitron', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: #fff;
+      flex-shrink: 0;
+    }
+    .discussion-info { flex: 1; min-width: 0; }
+    .discussion-title {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 700;
+      font-size: 14px;
+      color: #e8e8f0;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .discussion-meta {
+      font-size: 12px;
+      color: #555577;
+      display: flex;
+      gap: 12px;
+    }
+    .discussion-replies {
+      font-family: 'Orbitron', sans-serif;
+      font-size: 11px;
+      color: #00d4ff;
+      background: rgba(0,212,255,0.1);
+      padding: 4px 10px;
+      border-radius: 12px;
+      border: 1px solid rgba(0,212,255,0.2);
+      flex-shrink: 0;
+    }
+    .release-item {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 10px 0;
+      border-bottom: 1px solid rgba(255,255,255,0.05);
+    }
+    .release-item:last-child { border-bottom: none; }
+    .release-name {
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+      font-size: 14px;
+      color: #e8e8f0;
+    }
+    .release-date {
+      font-size: 12px;
+      color: #ff2d78;
+      font-family: 'Rajdhani', sans-serif;
+      font-weight: 600;
+    }
+  </style>
 </head>
 <body>
 
   <div class="loading-screen">
-    <div class="loading-logo"><span>N</span><span>E</span><span>O</span><span>N</span><span>V</span><span>E</span><span>R</span><span>S</span><span>E</span></div>
+    <div class="loading-logo">
+      <span>N</span><span>E</span><span>O</span><span>N</span>
+      <span>V</span><span>E</span><span>R</span><span>S</span><span>E</span>
+    </div>
     <div class="loading-spinner"></div>
     <div class="loading-progress"><div class="loading-progress-bar"></div></div>
   </div>
@@ -32,7 +289,9 @@
         <button class="navbar-search" aria-label="Search">🔍</button>
         <button class="btn-join-hub">JOIN HUB</button>
       </div>
-      <button class="navbar-hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+      <button class="navbar-hamburger" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </nav>
 
@@ -45,28 +304,45 @@
   </div>
 
   <section class="page-hero">
-    <div class="page-hero-bg"><div class="grid-bg"></div></div>
     <div class="page-hero-content">
-      <h1 class="reveal-scale gradient-text-animated">THE HUB</h1>
+      <h1>THE HUB</h1>
       <p>Where fans connect, discuss, and celebrate</p>
     </div>
   </section>
 
-  <section class="section" style="padding:3rem 0" id="stats-section">
+  <!-- STATS -->
+  <section class="section" id="stats-section" style="padding:3rem 0">
     <div class="container">
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:2rem;text-align:center">
-        <div class="reveal-bottom" data-stagger="0"><div class="stat-icon">👥</div><div class="stat-number"><span id="count-members">0</span></div><div class="stat-label">Members</div></div>
-        <div class="reveal-bottom" data-stagger="1"><div class="stat-icon">📺</div><div class="stat-number"><span id="count-anime">0</span></div><div class="stat-label">Anime</div></div>
-        <div class="reveal-bottom" data-stagger="2"><div class="stat-icon">🎮</div><div class="stat-number"><span id="count-games">0</span></div><div class="stat-label">Games</div></div>
-        <div class="reveal-bottom" data-stagger="3"><div class="stat-icon">💬</div><div class="stat-number"><span id="count-ratings">0</span></div><div class="stat-label">Ratings</div></div>
+      <div class="stat-grid">
+        <div>
+          <div class="stat-icon">👥</div>
+          <div class="stat-number"><span id="count-members">0</span></div>
+          <div class="stat-label">Members</div>
+        </div>
+        <div>
+          <div class="stat-icon">📺</div>
+          <div class="stat-number"><span id="count-anime">0</span></div>
+          <div class="stat-label">Anime</div>
+        </div>
+        <div>
+          <div class="stat-icon">🎮</div>
+          <div class="stat-number"><span id="count-games">0</span></div>
+          <div class="stat-label">Games</div>
+        </div>
+        <div>
+          <div class="stat-icon">💬</div>
+          <div class="stat-number"><span id="count-ratings">0</span></div>
+          <div class="stat-label">Ratings</div>
+        </div>
       </div>
     </div>
   </section>
 
+  <!-- QUOTES -->
   <section class="section" style="background:var(--bg-secondary)">
     <div class="container">
-      <div class="section-header reveal-left"><h2>WORDS OF WISDOM</h2><p>Famous quotes from anime legends</p></div>
-      <div class="quote-carousel reveal-scale" id="quote-carousel">
+      <div class="section-header"><h2>WORDS OF WISDOM</h2><p>Famous quotes from anime legends</p></div>
+      <div class="quote-carousel" id="quote-carousel">
         <div class="quote-mark">"</div>
         <div class="quote-slide active"><p class="quote-text">"It's not the face that makes someone a monster; it's the choices they make with their life."</p><div class="quote-author">— Naruto Uzumaki, Naruto</div></div>
         <div class="quote-slide"><p class="quote-text">"If you don't take risks, you can't create a future."</p><div class="quote-author">— Monkey D. Luffy, One Piece</div></div>
@@ -79,19 +355,20 @@
     </div>
   </section>
 
+  <!-- HOT THIS WEEK -->
   <section class="section">
     <div class="container">
-      <div class="section-header reveal-right"><h2>HOT THIS WEEK</h2><p>What the community is buzzing about</p></div>
-      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:1.5rem">
-        <div class="hot-card reveal-bottom" data-stagger="0">
+      <div class="section-header"><h2>HOT THIS WEEK</h2><p>What the community is buzzing about</p></div>
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:20px">
+        <div class="hot-card">
           <h3>📺 Top Trending Anime</h3>
           <ol class="hot-list" id="hot-anime-list"><li><span class="hot-name">Loading...</span></li></ol>
         </div>
-        <div class="hot-card reveal-bottom" data-stagger="1">
+        <div class="hot-card">
           <h3>🎮 Top Trending Games</h3>
           <ol class="hot-list" id="hot-games-list"><li><span class="hot-name">Loading...</span></li></ol>
         </div>
-        <div class="hot-card reveal-bottom" data-stagger="2">
+        <div class="hot-card">
           <h3>📅 Upcoming Releases</h3>
           <div>
             <div class="release-item"><span class="release-name">Solo Leveling S3</span><span class="release-date">Apr 2025</span></div>
@@ -105,14 +382,16 @@
     </div>
   </section>
 
+  <!-- DISCUSSIONS -->
   <section class="section" style="background:var(--bg-secondary)">
     <div class="container">
-      <div class="section-header reveal-left"><h2>COMMUNITY DISCUSSIONS</h2></div>
-      <div style="display:flex;flex-direction:column;gap:0.75rem;max-width:800px;margin:0 auto">
-        <div class="discussion-card reveal-bottom" data-stagger="0"><div class="discussion-avatar">SA</div><div class="discussion-info"><div class="discussion-title">What's your anime of the season so far?</div><div class="discussion-meta"><span>ShadowArcher</span><span>2h ago</span></div></div><div class="discussion-replies">47 replies</div></div>
-        <div class="discussion-card reveal-bottom" data-stagger="1"><div class="discussion-avatar" style="background:linear-gradient(135deg,var(--neon-blue),var(--neon-green))">NX</div><div class="discussion-info"><div class="discussion-title">Best JRPGs of the last decade — definitive list</div><div class="discussion-meta"><span>NeonXplorer</span><span>5h ago</span></div></div><div class="discussion-replies">123 replies</div></div>
-        <div class="discussion-card reveal-bottom" data-stagger="2"><div class="discussion-avatar" style="background:linear-gradient(135deg,var(--neon-pink),var(--neon-purple))">VK</div><div class="discussion-info"><div class="discussion-title">Is Chainsaw Man Part 2 better than Part 1?</div><div class="discussion-meta"><span>VoidKnight</span><span>8h ago</span></div></div><div class="discussion-replies">89 replies</div></div>
-        <div class="discussion-card reveal-bottom" data-stagger="3"><div class="discussion-avatar" style="background:linear-gradient(135deg,var(--neon-green),var(--neon-blue))">PS</div><div class="discussion-info"><div class="discussion-title">GTA 6 hype thread — predictions</div><div class="discussion-meta"><span>PixelStorm</span><span>12h ago</span></div></div><div class="discussion-replies">256 replies</div></div>
+      <div class="section-header"><h2>COMMUNITY DISCUSSIONS</h2></div>
+      <div style="display:flex;flex-direction:column;gap:12px;max-width:800px;margin:0 auto">
+        <div class="discussion-card"><div class="discussion-avatar">SA</div><div class="discussion-info"><div class="discussion-title">What's your anime of the season so far?</div><div class="discussion-meta"><span>ShadowArcher</span><span>2h ago</span></div></div><div class="discussion-replies">47 replies</div></div>
+        <div class="discussion-card"><div class="discussion-avatar" style="background:linear-gradient(135deg,#00d4ff,#00ff9d)">NX</div><div class="discussion-info"><div class="discussion-title">Best JRPGs of the last decade — definitive list</div><div class="discussion-meta"><span>NeonXplorer</span><span>5h ago</span></div></div><div class="discussion-replies">123 replies</div></div>
+        <div class="discussion-card"><div class="discussion-avatar" style="background:linear-gradient(135deg,#ff2d78,#b026ff)">VK</div><div class="discussion-info"><div class="discussion-title">Is Chainsaw Man Part 2 better than Part 1?</div><div class="discussion-meta"><span>VoidKnight</span><span>8h ago</span></div></div><div class="discussion-replies">89 replies</div></div>
+        <div class="discussion-card"><div class="discussion-avatar" style="background:linear-gradient(135deg,#00ff9d,#00d4ff)">PS</div><div class="discussion-info"><div class="discussion-title">GTA 6 hype thread — predictions</div><div class="discussion-meta"><span>PixelStorm</span><span>12h ago</span></div></div><div class="discussion-replies">256 replies</div></div>
+        <div class="discussion-card"><div class="discussion-avatar" style="background:linear-gradient(135deg,#b026ff,#ff2d78)">EQ</div><div class="discussion-info"><div class="discussion-title">Underrated anime that deserve more attention</div><div class="discussion-meta"><span>EchoQueen</span><span>1d ago</span></div></div><div class="discussion-replies">34 replies</div></div>
       </div>
     </div>
   </section>
@@ -120,33 +399,98 @@
   <footer class="footer">
     <div class="container">
       <div class="footer-grid">
-        <div class="footer-brand"><div class="logo">NEONVERSE</div><p>Your ultimate destination for anime and gaming.</p></div>
-        <div class="footer-links"><h4>Quick Links</h4><ul><li><a href="index.html">Home</a></li><li><a href="anime.html">Anime</a></li><li><a href="games.html">Games</a></li><li><a href="seasonal.html">Seasonal</a></li><li><a href="community.html">Community</a></li></ul></div>
-        <div class="footer-social"><h4>Connect</h4><div class="social-icons"><a href="#" class="social-icon discord">💬</a><a href="#" class="social-icon twitter">🐦</a><a href="#" class="social-icon youtube">▶️</a><a href="#" class="social-icon reddit">🤖</a></div></div>
-        <div class="footer-newsletter"><h4>Stay Updated</h4><form class="newsletter-form" onsubmit="event.preventDefault()"><input type="email" placeholder="your@email.com" /><button type="submit">→</button></form></div>
+        <div class="footer-brand">
+          <div class="logo">NEONVERSE</div>
+          <p>Your ultimate destination for anime and gaming.</p>
+        </div>
+        <div class="footer-links">
+          <h4>Quick Links</h4>
+          <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="anime.html">Anime</a></li>
+            <li><a href="games.html">Games</a></li>
+            <li><a href="seasonal.html">Seasonal</a></li>
+            <li><a href="community.html">Community</a></li>
+          </ul>
+        </div>
+        <div class="footer-social">
+          <h4>Connect</h4>
+          <div class="social-icons">
+            <a href="#" class="social-icon discord">💬</a>
+            <a href="#" class="social-icon twitter">🐦</a>
+            <a href="#" class="social-icon youtube">▶️</a>
+            <a href="#" class="social-icon reddit">🤖</a>
+          </div>
+        </div>
+        <div class="footer-newsletter">
+          <h4>Stay Updated</h4>
+          <form class="newsletter-form" onsubmit="event.preventDefault()">
+            <input type="email" placeholder="your@email.com" />
+            <button type="submit">→</button>
+          </form>
+        </div>
       </div>
-      <div class="footer-bottom"><p>© 2025 NEONVERSE. Built with 💜 for the community.</p></div>
+      <div class="footer-bottom">
+        <p>© 2025 NEONVERSE. Built with 💜 for the community.</p>
+      </div>
     </div>
   </footer>
 
-  <script src="js/api.js"></script>
   <script src="js/animations.js"></script>
   <script src="js/main.js"></script>
 
-  <!-- SELF-CONTAINED: Directly renders data on page load -->
   <script>
-  window.onload = function() {
-    console.log('[community.html] window.onload fired — rendering...');
-    if (typeof loadHotAnimeList === 'function') {
-      loadHotAnimeList();
+  (async function() {
+
+    // ── HOT ANIME LIST ──
+    var animeList = document.getElementById('hot-anime-list');
+    if (animeList) {
+      var fallbackAnime = [
+        {title:'Sousou no Frieren',score:9.27},
+        {title:'Fullmetal Alchemist: Brotherhood',score:9.10},
+        {title:'Steins;Gate',score:9.07},
+        {title:'Hunter x Hunter',score:9.04},
+        {title:'Attack on Titan',score:9.00}
+      ];
+      try {
+        var res = await fetch('https://api.jikan.moe/v4/top/anime?limit=5');
+        var json = await res.json();
+        var data = (json.data && json.data.length) ? json.data : fallbackAnime;
+        animeList.innerHTML = data.map(function(a) {
+          return '<li><span class="hot-name">' + a.title + '</span><span class="hot-score">' + (a.score ? '⭐ ' + a.score : 'N/A') + '</span></li>';
+        }).join('');
+      } catch(e) {
+        animeList.innerHTML = fallbackAnime.map(function(a) {
+          return '<li><span class="hot-name">' + a.title + '</span><span class="hot-score">⭐ ' + a.score + '</span></li>';
+        }).join('');
+      }
     }
-    if (typeof loadHotGamesList === 'function') {
-      loadHotGamesList();
+
+    // ── HOT GAMES LIST ──
+    var gamesList = document.getElementById('hot-games-list');
+    if (gamesList) {
+      var fallbackGames = [
+        {name:'Elden Ring',metacritic:96},
+        {name:'God of War',metacritic:94},
+        {name:'Red Dead Redemption 2',metacritic:97},
+        {name:'The Witcher 3',metacritic:95},
+        {name:'Hades',metacritic:93}
+      ];
+      try {
+        var res2 = await fetch('https://api.rawg.io/api/games?ordering=-rating&page_size=5');
+        var json2 = await res2.json();
+        var data2 = (json2.results && json2.results.length && json2.results[0].background_image) ? json2.results : fallbackGames;
+        gamesList.innerHTML = data2.map(function(g) {
+          return '<li><span class="hot-name">' + g.name + '</span><span class="hot-score">' + (g.metacritic ? '📊 ' + g.metacritic : 'N/A') + '</span></li>';
+        }).join('');
+      } catch(e) {
+        gamesList.innerHTML = fallbackGames.map(function(g) {
+          return '<li><span class="hot-name">' + g.name + '</span><span class="hot-score">📊 ' + g.metacritic + '</span></li>';
+        }).join('');
+      }
     }
-    if (typeof initCountUp === 'function') {
-      initCountUp();
-    }
-    // Quote carousel
+
+    // ── QUOTE CAROUSEL ──
     var slides = document.querySelectorAll('.quote-slide');
     var dotsContainer = document.getElementById('quote-dots');
     if (slides.length && dotsContainer) {
@@ -154,7 +498,7 @@
       slides.forEach(function(_, i) {
         var dot = document.createElement('div');
         dot.className = 'quote-dot' + (i === 0 ? ' active' : '');
-        dot.addEventListener('click', (function(idx) { return function() { goToSlide(idx); }; })(i));
+        dot.addEventListener('click', (function(idx){return function(){goToSlide(idx)}})(i));
         dotsContainer.appendChild(dot);
       });
       var dots = dotsContainer.querySelectorAll('.quote-dot');
@@ -165,9 +509,37 @@
         slides[currentSlide].classList.add('active');
         dots[currentSlide].classList.add('active');
       }
-      setInterval(function() { goToSlide((currentSlide + 1) % slides.length); }, 4000);
+      setInterval(function(){goToSlide((currentSlide+1)%slides.length)}, 4000);
     }
-  };
+
+    // ── COUNT UP ──
+    var statsSection = document.getElementById('stats-section');
+    if (statsSection) {
+      function animCount(id, target) {
+        var el = document.getElementById(id);
+        if (!el) return;
+        var cur = 0;
+        var inc = target / 60;
+        var t = setInterval(function() {
+          cur = Math.min(cur + inc, target);
+          el.textContent = target >= 1000000
+            ? (cur/1000000).toFixed(1)+'M+'
+            : Math.floor(cur/1000)+'K+';
+          if (cur >= target) clearInterval(t);
+        }, 33);
+      }
+      new IntersectionObserver(function(entries) {
+        if (entries[0].isIntersecting) {
+          animCount('count-members', 94000);
+          animCount('count-anime', 12400);
+          animCount('count-games', 8200);
+          animCount('count-ratings', 2100000);
+        }
+      }, {threshold:0.3}).observe(statsSection);
+    }
+
+  })();
   </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f4d477a48c8d5ab',t:'MTc3NzYyMjcwNg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f4db11c7e6347d9',t:'MTc3NzYyNzAzMw=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
