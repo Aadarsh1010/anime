@@ -144,24 +144,242 @@
   <script src="js/animations.js"></script>
   <script src="js/main.js"></script>
 
-  <!-- SELF-CONTAINED: Directly renders cards on page load -->
-  <script>
-  window.onload = function() {
-    console.log('[index.html] window.onload fired — rendering cards...');
-    if (typeof fetchAndRenderAnime === 'function') {
-      fetchAndRenderAnime('trending-anime-container', 6);
-    } else {
-      console.error('fetchAndRenderAnime not found');
+<script>
+(async function() {
+
+  // ── ANIME CARDS ──
+  const animeGrid = document.getElementById('trending-anime-container');
+  if (animeGrid) {
+    animeGrid.innerHTML = Array(6).fill(`
+      <div style="min-width:200px;height:300px;background:rgba(255,255,255,0.05);
+      border-radius:12px;flex-shrink:0;animation:shimmer 1.5s infinite alternate;"></div>
+    `).join('');
+
+    try {
+      const res = await fetch('https://api.jikan.moe/v4/top/anime?limit=6');
+      const json = await res.json();
+      const list = json.data || [];
+
+      animeGrid.innerHTML = list.map((a, i) => {
+        const img = a.images?.jpg?.large_image_url
+          || 'https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400';
+        const genres = (a.genres||[]).slice(0,2)
+          .map(g=>`<span class="genre-tag">${g.name}</span>`).join('');
+        const youtubeId = a.trailer?.youtube_id || '';
+        const titleSafe = (a.title||'').replace(/'/g,"\\'");
+        const synopsisSafe = (a.synopsis||'No synopsis.').substring(0,500).replace(/'/g,"\\'").replace(/\n/g,' ');
+        const genreNames = (a.genres||[]).map(g=>g.name).join(',');
+
+        return `
+          <div class="anime-card" onclick="openNvModal(
+            '${titleSafe}',
+            '${img}',
+            '${a.score||"N/A"}',
+            '${a.episodes||"?"}',
+            '${a.status||""}',
+            '${synopsisSafe}',
+            '${genreNames}',
+            '${youtubeId}'
+          )">
+            <div class="card-rank">#${i+1}</div>
+            <div class="card-score">⭐ ${a.score||'N/A'}</div>
+            <img src="${img}" alt="${a.title}" loading="lazy"
+                 onerror="this.src='https://images.unsplash.com/photo-1578632767115-351597cf2477?w=400'">
+            <div class="card-overlay">
+              <div class="card-title">${a.title}</div>
+              <div class="card-genres">${genres}</div>
+              <div class="view-btn">VIEW DETAILS →</div>
+            </div>
+          </div>`;
+      }).join('');
+    } catch(e) {
+      animeGrid.innerHTML = `<p style="color:#888;padding:20px;">
+        Could not load anime. <button onclick="location.reload()" 
+        style="color:#b026ff;background:none;border:none;cursor:pointer;">Retry</button>
+      </p>`;
     }
-    if (typeof fetchAndRenderGames === 'function') {
-      fetchAndRenderGames('top-games-container', 6);
-    } else {
-      console.error('fetchAndRenderGames not found');
+  }
+
+  // ── GAME CARDS ──
+  const gamesGrid = document.getElementById('top-games-container');
+  if (gamesGrid) {
+    gamesGrid.innerHTML = Array(6).fill(`
+      <div style="min-width:200px;height:300px;background:rgba(255,255,255,0.05);
+      border-radius:12px;flex-shrink:0;animation:shimmer 1.5s infinite alternate;"></div>
+    `).join('');
+
+    const fallbackGames = [
+      {name:'Elden Ring',metacritic:96,genres:[{name:'RPG'}],background_image:'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600'},
+      {name:'God of War',metacritic:94,genres:[{name:'Action'}],background_image:'https://images.unsplash.com/photo-1511512578047-dfb367046420?w=600'},
+      {name:'Cyberpunk 2077',metacritic:90,genres:[{name:'RPG'}],background_image:'https://images.unsplash.com/photo-1550745165-9bc0b252726f?w=600'},
+      {name:'The Witcher 3',metacritic:95,genres:[{name:'RPG'}],background_image:'https://images.unsplash.com/photo-1493711662062-fa541adb3fc8?w=600'},
+      {name:'Hades',metacritic:93,genres:[{name:'Roguelike'}],background_image:'https://images.unsplash.com/photo-1538481199705-c710c4e965fc?w=600'},
+      {name:'Red Dead 2',metacritic:97,genres:[{name:'Adventure'}],background_image:'https://images.unsplash.com/photo-1616588589676-62b3bd4ff6d2?w=600'}
+    ];
+
+    function renderGames(data) {
+      gamesGrid.innerHTML = data.map(g => {
+        const img = g.background_image
+          || 'https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600';
+        const genre = (g.genres||[{name:'Game'}])[0].name;
+        const sc = g.metacritic||0;
+        const scoreClass = sc>=90?'score-green':'score-yellow';
+        return `
+          <div class="game-card">
+            <div class="card-score ${scoreClass}">${sc||'N/A'}</div>
+            <img src="${img}" alt="${g.name}" loading="lazy"
+                 onerror="this.src='https://images.unsplash.com/photo-1542751371-adc38448a05e?w=600'">
+            <div class="card-overlay">
+              <div class="card-title">${g.name}</div>
+              <div class="card-genres"><span class="genre-tag">${genre}</span></div>
+              <div class="view-btn">VIEW DETAILS →</div>
+            </div>
+          </div>`;
+      }).join('');
     }
-    if (typeof initCountUp === 'function') {
-      initCountUp();
+
+    try {
+      const res = await fetch('https://api.rawg.io/api/games?ordering=-rating&page_size=6');
+      const json = await res.json();
+      const data = json.results||[];
+      if (!data.length) throw new Error('empty');
+      renderGames(data);
+    } catch(e) {
+      renderGames(fallbackGames);
     }
-  };
-  </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9f4d456e6f25d5ab',t:'MTc3NzYyMjYyMg=='};var a=document.createElement('script');a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+  }
+
+  // ── COUNT UP ──
+  const statsSection = document.getElementById('stats-section');
+  if (statsSection) {
+    function animCount(id, target) {
+      const el = document.getElementById(id);
+      if (!el) return;
+      let cur = 0;
+      const inc = target / 60;
+      const t = setInterval(() => {
+        cur = Math.min(cur + inc, target);
+        el.textContent = target >= 1000000
+          ? (cur/1000000).toFixed(1)+'M+'
+          : Math.floor(cur/1000)+'K+';
+        if (cur >= target) clearInterval(t);
+      }, 33);
+    }
+    new IntersectionObserver(entries => {
+      if (entries[0].isIntersecting) {
+        animCount('count-members', 94000);
+        animCount('count-anime', 12400);
+        animCount('count-games', 8200);
+        animCount('count-ratings', 2100000);
+      }
+    }, {threshold:0.3}).observe(statsSection);
+  }
+
+})();
+
+// ── MODAL (works on all pages) ──
+window.openNvModal = function(title,img,score,episodes,status,synopsis,genres,youtubeId) {
+  let modal = document.getElementById('nv-modal');
+  if (!modal) {
+    modal = document.createElement('div');
+    modal.id = 'nv-modal';
+    modal.style.cssText = `position:fixed;top:0;left:0;width:100vw;height:100vh;
+      background:rgba(0,0,0,0.92);backdrop-filter:blur(10px);z-index:99999;
+      display:none;align-items:center;justify-content:center;padding:20px;
+      box-sizing:border-box;`;
+    modal.onclick = e => { if(e.target===modal) closeNvModal(); };
+    document.body.appendChild(modal);
+  }
+
+  const trailerHtml = youtubeId ? `
+    <div style="position:relative;padding-bottom:56.25%;height:0;
+         border-radius:12px;overflow:hidden;margin-bottom:20px;
+         border:1px solid rgba(176,38,255,0.3);">
+      <iframe id="nv-trailer"
+        src="https://www.youtube.com/embed/${youtubeId}?rel=0"
+        style="position:absolute;top:0;left:0;width:100%;height:100%;border:none;"
+        allow="accelerometer;autoplay;clipboard-write;encrypted-media;gyroscope;picture-in-picture"
+        allowfullscreen></iframe>
+    </div>` : `
+    <img src="${img}" style="width:100%;max-height:240px;object-fit:cover;
+         border-radius:12px;margin-bottom:20px;
+         border:1px solid rgba(176,38,255,0.3);"
+         onerror="this.style.display='none'">`;
+
+  const genreTags = (genres||'').split(',').filter(Boolean).map(g =>
+    `<span style="background:rgba(255,255,255,0.07);border:1px solid rgba(255,255,255,0.2);
+     color:#ccc;padding:4px 12px;border-radius:20px;font-size:12px;
+     display:inline-block;margin:3px 3px 3px 0;">${g.trim()}</span>`
+  ).join('');
+
+  modal.innerHTML = `
+    <div style="background:#0d0d1a;border:1px solid rgba(176,38,255,0.4);
+         border-radius:20px;width:min(860px,100%);max-height:90vh;
+         overflow-y:auto;box-shadow:0 0 80px rgba(176,38,255,0.25);">
+      <div style="padding:28px;">
+        <div style="display:flex;justify-content:space-between;
+             align-items:flex-start;margin-bottom:16px;">
+          <h2 style="font-family:'Orbitron',sans-serif;
+               font-size:clamp(16px,2.5vw,26px);color:#fff;
+               text-shadow:0 0 20px rgba(176,38,255,0.8);
+               margin:0;padding-right:16px;">${title}</h2>
+          <button onclick="closeNvModal()" style="
+               background:rgba(176,38,255,0.15);
+               border:1px solid rgba(176,38,255,0.4);
+               color:#b026ff;width:36px;height:36px;border-radius:50%;
+               font-size:18px;cursor:pointer;flex-shrink:0;
+               display:flex;align-items:center;justify-content:center;">✕</button>
+        </div>
+        <div style="display:flex;flex-wrap:wrap;gap:8px;margin-bottom:16px;">
+          <span style="background:rgba(176,38,255,0.2);border:1px solid #b026ff;
+                color:#b026ff;padding:5px 14px;border-radius:20px;
+                font-size:13px;font-weight:600;">⭐ ${score}</span>
+          <span style="background:rgba(0,212,255,0.1);border:1px solid #00d4ff;
+                color:#00d4ff;padding:5px 14px;border-radius:20px;font-size:13px;">
+                📺 ${episodes} Episodes</span>
+          <span style="background:rgba(0,255,157,0.1);border:1px solid #00ff9d;
+                color:#00ff9d;padding:5px 14px;border-radius:20px;
+                font-size:13px;">${status}</span>
+        </div>
+        <div style="margin-bottom:20px;">${genreTags}</div>
+        ${trailerHtml}
+        <h4 style="color:#b026ff;font-family:'Orbitron',sans-serif;
+             font-size:11px;letter-spacing:3px;margin-bottom:10px;">SYNOPSIS</h4>
+        <p style="color:#bbb;line-height:1.8;font-size:14px;margin-bottom:24px;">
+          ${synopsis}...</p>
+        <div style="display:flex;gap:12px;flex-wrap:wrap;">
+          ${youtubeId?`<button onclick="
+            document.getElementById('nv-trailer').src += '&autoplay=1'"
+            style="background:linear-gradient(135deg,#b026ff,#7b00ff);
+            color:#fff;padding:12px 24px;border-radius:10px;border:none;
+            cursor:pointer;font-family:'Orbitron',sans-serif;font-size:13px;
+            font-weight:700;box-shadow:0 0 20px rgba(176,38,255,0.4);">
+            ▶ PLAY TRAILER</button>`:''}
+          <button onclick="closeNvModal()"
+            style="background:transparent;border:1px solid rgba(176,38,255,0.4);
+            color:#b026ff;padding:12px 24px;border-radius:10px;cursor:pointer;
+            font-family:'Orbitron',sans-serif;font-size:13px;">CLOSE</button>
+        </div>
+      </div>
+    </div>`;
+
+  modal.style.display = 'flex';
+  document.body.style.overflow = 'hidden';
+};
+
+window.closeNvModal = function() {
+  const m = document.getElementById('nv-modal');
+  if (m) {
+    const iframe = m.querySelector('iframe');
+    if (iframe) iframe.src = iframe.src; // stops video
+    m.style.display = 'none';
+    document.body.style.overflow = '';
+  }
+};
+
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeNvModal();
+});
+</script>
+</body>
 </html>
